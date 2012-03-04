@@ -1,10 +1,48 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html xmlns:fb="http://ogp.me/ns/fb#">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login with Facebook</title>
+<script type="text/javascript" src="js/logger.js"></script>
+<script type="text/javascript" src="js/starter.js"></script>
+<style type="text/css">
+body,p,div,ul,li {
+	margin: 0;
+	padding: 0;
+}
+#loginbar {
+	position:fixed;
+	top: 0;
+	height: 25px;
+	background-color: #335E9B;
+	display: none;
+	width: 100%;
+	padding: 5px;
+}
+#loginbar a, #loginbar a:hover{
+	color: #fff;
+	text-decoration: none;
+}
+#loginbar img{
+	height: 25px;
+}
+</style>
 </head>
 <body>
-
+<div id="loginbar"></div>
+<div id="for-button"></div>
 </body>
+<script type="text/javascript">
+MY.app.setup({
+	onLogin: function(r) {
+		document.getElementById('for-button').innerHTML = '';
+		var html = '<a href="'+r.link+'"> <img src="http://graph.facebook.com/'+r.id+'/picture">'+r.name+'</a>';
+		document.getElementById('loginbar').innerHTML = html;
+		document.getElementById('loginbar').style.display = 'block';
+	},
+	onLogout: function() {
+		this.doFBML(document.getElementById('for-button'), '<fb:login-button show-faces="false" width="200" scope="email"></fb:login-button>');
+	}
+}).init();
+</script>
 </html>
